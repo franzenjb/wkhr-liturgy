@@ -3,6 +3,9 @@ window.WKHR = {
   "mar29",
   "apr26",
   "jun07",
+  "jun14",
+  "jun21",
+  "jun28",
   "jul05",
   "jul12"
  ],
@@ -220,6 +223,251 @@ window.WKHR = {
     ]
    ],
    "audio": "./audio/jun07.mp3"
+  },
+  "jun14": {
+   "label": "June 14",
+   "sub": "Second Sunday of June",
+   "captured": "full",
+   "slots": {
+    "time": "7:01½",
+    "temp": null,
+    "sunrise": "5:49",
+    "sunset": "9:01",
+    "length": "15h 12m",
+    "delta": "5 min longer",
+    "deltaDir": "up",
+    "ref": "last week",
+    "feature": "Opening set — Burl Ives, “Going Down the Road Feeling Bad”"
+   },
+   "lengthMin": 912,
+   "lines": [
+    [
+     0.0,
+     "…on your FM radio dial, and good morning to the world, streaming live on WKHR.org.",
+     []
+    ],
+    [
+     6.76,
+     "My name's David, and it's a pleasure to be with you during another Sunday sunrise.",
+     []
+    ],
+    [
+     12.6,
+     "It is currently 7:01 and a half on Sunday, June 14th, 2026.",
+     [
+      "time",
+      "date"
+     ]
+    ],
+    [
+     19.92,
+     "Today we had a sunrise here in Bainbridge at 5:49,",
+     [
+      "sunrise"
+     ]
+    ],
+    [
+     24.0,
+     "and we'll have a sunset this evening at 9:01 for a day length of 15 hours and 12 minutes.",
+     [
+      "sunset",
+      "length"
+     ]
+    ],
+    [
+     33.68,
+     "That is 5 minutes longer than what we had last week.",
+     [
+      "delta"
+     ]
+    ],
+    [
+     37.36,
+     "I started the show off this morning, as I usually do, with Irving Berlin's “It's a Lovely Day Today” — so whatever you've got to do, you've got an absolutely lovely day to do it in.",
+     []
+    ],
+    [
+     48.16,
+     "Please be sure to take WKHR along with you on your radio and online.",
+     []
+    ],
+    [
+     53.92,
+     "I'm going to get the opening set started this week with Burl Ives.",
+     [
+      "feature"
+     ]
+    ]
+   ],
+   "audio": "./audio/jun14.mp3"
+  },
+  "jun21": {
+   "label": "June 21",
+   "sub": "Third Sunday of June — Father's Day",
+   "captured": "full",
+   "slots": {
+    "time": "7:02½",
+    "temp": null,
+    "sunrise": "5:50",
+    "sunset": "9:03",
+    "length": "15h 13m",
+    "delta": "1 min longer",
+    "deltaDir": "up",
+    "ref": "last week",
+    "feature": "Cast-recording Sunday — The Fantasticks (1960), Schmidt & Jones"
+   },
+   "lengthMin": 913,
+   "lines": [
+    [
+     0.0,
+     "Good morning, Northeast Ohio. This is WKHR Bainbridge, Cleveland, 91.5 on your FM radio dial — and good morning to the world, streaming live on WKHR.org.",
+     []
+    ],
+    [
+     33.88,
+     "My name's David, and it's a pleasure to be with you during another Sunday sunrise.",
+     []
+    ],
+    [
+     40.0,
+     "It is currently 7:02 and a half on Sunday, June 21st, 2026. Happy Father's Day.",
+     [
+      "time",
+      "date"
+     ]
+    ],
+    [
+     46.5,
+     "Today we had a sunrise here in Bainbridge at 5:50; we'll have a sunset this evening at 9:03 for a day length of 15 hours and 13 minutes.",
+     [
+      "sunrise",
+      "sunset",
+      "length"
+     ]
+    ],
+    [
+     60.0,
+     "That is 1 minute longer than it was last week — and this is the first day of summer.",
+     [
+      "delta"
+     ]
+    ],
+    [
+     66.0,
+     "The summer solstice occurred this morning at 4:24 a.m., and this is the longest day of the year.",
+     []
+    ],
+    [
+     84.0,
+     "I started the show off this morning, as I usually do, with Irving Berlin's “It's a Lovely Day Today” — so whatever you've got to do, you've got an absolutely lovely day to do it in.",
+     []
+    ],
+    [
+     95.0,
+     "Please be sure to take WKHR along with you on your radio and online.",
+     []
+    ],
+    [
+     99.24,
+     "As I mentioned last week, June's been a little different: I usually feature the original Broadway cast album on the first Sunday, then stroll the Great American Songbook the rest of the month.",
+     []
+    ],
+    [
+     137.24,
+     "This Sunday I'm featuring another Broadway cast recording, and next Sunday I'll take that stroll to find the other artists who've covered the tunes.",
+     []
+    ],
+    [
+     149.88,
+     "The musical I'll present today is from 1960 — music by Harvey Schmidt, lyrics and book by Tom Jones, based on the 1894 play Les Romanesques by Edmond Rostand: The Fantasticks.",
+     [
+      "feature"
+     ]
+    ],
+    [
+     171.96,
+     "Here is the overture from The Fantasticks, from the original off-Broadway cast recording.",
+     []
+    ]
+   ],
+   "audio": "./audio/jun21.mp3"
+  },
+  "jun28": {
+   "label": "June 28",
+   "sub": "Last Sunday of June",
+   "captured": "full",
+   "slots": {
+    "time": "7:03",
+    "temp": "64°",
+    "sunrise": "5:53",
+    "sunset": "9:04",
+    "length": "15h 11m",
+    "delta": "2 min shorter",
+    "deltaDir": "down",
+    "ref": "last week",
+    "feature": "Richard Rodgers' birthday (b. June 28, 1902) — an early Rodgers work from 1927"
+   },
+   "lengthMin": 911,
+   "lines": [
+    [
+     0.0,
+     "Good morning, Northeast Ohio. This is WKHR Bainbridge, Cleveland, 91.5 on your FM radio dial — and good morning to the world, streaming live on WKHR.org.",
+     []
+    ],
+    [
+     17.68,
+     "My name's David, and it's a pleasure to be with you here in another Sunday sunrise.",
+     []
+    ],
+    [
+     23.68,
+     "It is currently just turning over to 7:03 on Sunday, June 28th, 2026, and we're currently 64 degrees outside the WKHR studio in Bainbridge.",
+     [
+      "time",
+      "date",
+      "temp"
+     ]
+    ],
+    [
+     37.68,
+     "Today we had a sunrise at 5:53 here in Bainbridge; we'll have a sunset this evening at 9:04 for a day length of 15 hours and 11 minutes.",
+     [
+      "sunrise",
+      "sunset",
+      "length"
+     ]
+    ],
+    [
+     50.68,
+     "That is 2 minutes shorter than it was last week.",
+     [
+      "delta"
+     ]
+    ],
+    [
+     54.68,
+     "I started the show off this morning, as I usually do, with Irving Berlin's “It's a Lovely Day Today” — so whatever you've got to do, you've got a lovely day to do it in.",
+     []
+    ],
+    [
+     64.68,
+     "Please be sure to take WKHR along with you on your radio and online.",
+     []
+    ],
+    [
+     70.68,
+     "This week I have a very large birthday to celebrate: born on this day, June 28th, in 1902, was Richard Charles Rodgers, an American composer who worked primarily in musical theater.",
+     [
+      "feature"
+     ]
+    ],
+    [
+     86.68,
+     "So we're going to get the show started today, concentrating on his earlier works — we'll start with one from 1927, composed by Richard Rodgers.",
+     []
+    ]
+   ],
+   "audio": "./audio/jun28.mp3"
   },
   "jul05": {
    "label": "July 5",
