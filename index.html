@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Sunday Sunrise Liturgy — WKHR 91.5</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --arc-red:#ED1B2E;--arc-black:#1a1a1a;--arc-cream:#f7f5f2;
+  --arc-gray-900:#2d2d2d;--arc-gray-700:#4a4a4a;--arc-gray-500:#737373;
+  --arc-gray-300:#a3a3a3;--arc-gray-100:#e5e5e5;--arc-white:#fff;
+  --arc-info:#1e4a6d;--arc-success:#2d5a27;--arc-caution:#b8860b;
+  --font-headline:'Libre Baskerville',Georgia,serif;
+  --font-body:'Source Sans Pro','Helvetica Neue',sans-serif;
+  --font-data:'IBM Plex Mono',Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--arc-cream)!important}
+body{font-family:var(--font-body);background:var(--arc-cream)!important;color:var(--arc-gray-900);line-height:1.55;-webkit-font-smoothing:antialiased}
+.container{max-width:1000px;margin:0 auto;padding:0 24px}
+::-webkit-scrollbar{width:7px;height:7px}
+::-webkit-scrollbar-track{background:var(--arc-cream)}
+::-webkit-scrollbar-thumb{background:var(--arc-gray-300);border-radius:3px}
+
+/* header */
+header{background:var(--arc-white);border-bottom:3px solid var(--arc-black);padding:30px 0 26px}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.brand span{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--arc-gray-500)}
+h1{font-family:var(--font-headline);font-size:34px;font-weight:700;color:var(--arc-black);line-height:1.15}
+.sub{font-size:17px;color:var(--arc-gray-500);font-weight:300;margin-top:6px}
+.redrule{width:40px;height:3px;background:var(--arc-red)}
+
+main{padding-top:34px;padding-bottom:60px;background:var(--arc-cream);min-height:60vh}
+section{margin-bottom:46px}
+.sechead{margin-bottom:18px}
+.sechead .num{font-family:var(--font-data);font-size:13px;color:var(--arc-red);font-weight:600}
+.sechead h2{font-family:var(--font-headline);font-size:23px;font-weight:700;color:var(--arc-black);margin:6px 0 6px}
+.sechead p{font-size:14px;color:var(--arc-gray-500);max-width:680px}
+
+/* intro copy */
+.lede{font-size:17px;color:var(--arc-gray-700);max-width:720px}
+.lede b{color:var(--arc-black);font-weight:600}
+
+/* the ritual / template panel */
+.ritual{background:var(--arc-white);border:1px solid var(--arc-gray-100);border-left:3px solid var(--arc-red);padding:26px 28px;font-family:var(--font-headline);font-size:17px;line-height:1.95;color:var(--arc-black)}
+.chip{display:inline-block;font-family:var(--font-data);font-size:13.5px;font-weight:500;line-height:1.3;padding:1px 8px;border-radius:3px;background:#fbecef;color:var(--arc-red);border:1px solid #f5c6cd;white-space:nowrap;transition:background .15s,box-shadow .15s}
+.chip.empty{background:var(--arc-gray-100);color:var(--arc-gray-500);border-color:var(--arc-gray-100);font-style:normal}
+.chip.pulse{background:var(--arc-red);color:#fff;border-color:var(--arc-red);box-shadow:0 0 0 3px rgba(237,27,46,.15)}
+.legend{font-family:var(--font-body);font-size:12.5px;color:var(--arc-gray-500);margin-top:14px}
+.legend .k{display:inline-block;width:11px;height:11px;border-radius:2px;vertical-align:-1px;margin:0 5px 0 14px}
+.legend .k.a{background:#fbecef;border:1px solid #f5c6cd}
+.legend .k.b{background:var(--arc-black)}
+
+/* player */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.wk{flex:1 1 165px;min-width:150px;background:var(--arc-white);border:1px solid var(--arc-gray-100);padding:12px 14px;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative}
+.wk:hover{box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.wk.active{border-color:var(--arc-black);box-shadow:inset 3px 0 0 var(--arc-red)}
+.wk .d{font-family:var(--font-headline);font-size:16px;font-weight:700;color:var(--arc-black)}
+.wk .s{font-size:11.5px;color:var(--arc-gray-500);margin-top:1px}
+.wk .len{font-family:var(--font-data);font-size:12px;color:var(--arc-gray-700);margin-top:8px}
+.wk .playing{position:absolute;top:12px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--arc-red);opacity:0;transition:opacity .2s}
+.wk.sounding .playing{opacity:1;animation:blink 1s steps(2,start) infinite}
+@keyframes blink{50%{opacity:.25}}
+.wk .mute{position:absolute;top:10px;right:10px;font-family:var(--font-data);font-size:10px;padding:2px 5px;border:1px solid var(--arc-gray-300);border-radius:3px;color:var(--arc-gray-500);background:var(--arc-white);display:none}
+body.stack .wk .mute{display:block}
+body.stack .wk .playing{display:none}
+.wk.muted{opacity:.5}
+.wk.muted .mute{color:var(--arc-red);border-color:var(--arc-red)}
+
+.controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--arc-white);border:1px solid var(--arc-gray-100);padding:14px 18px}
+.btn{font-family:var(--font-body);font-size:14px;font-weight:600;padding:9px 18px;border:none;cursor:pointer;background:var(--arc-red);color:#fff;letter-spacing:.3px}
+.btn:hover{background:#c41628}
+.btn.ghost{background:transparent;color:var(--arc-black);border:1px solid var(--arc-gray-300)}
+.btn.ghost:hover{background:var(--arc-cream);border-color:var(--arc-black)}
+.btn.on{background:var(--arc-black);color:#fff;border-color:var(--arc-black)}
+.thint{font-size:12.5px;color:var(--arc-gray-500);flex:1 1 auto;min-width:120px}
+.bar{flex:1 1 100%;height:6px;background:var(--arc-gray-100);position:relative;cursor:pointer;margin-top:4px}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--arc-red);width:0%}
+.tt{font-family:var(--font-data);font-size:12px;color:var(--arc-gray-500);min-width:82px;text-align:right}
+
+/* aired transcript */
+.aired{background:var(--arc-white);border:1px solid var(--arc-gray-100);padding:22px 26px;margin-top:16px}
+.aired .cap{font-family:var(--font-data);font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--arc-gray-500);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.aired .cap .tag{color:var(--arc-caution)}
+.line{font-family:var(--font-headline);font-size:16.5px;line-height:1.7;color:var(--arc-gray-300);padding:3px 0;transition:color .2s;cursor:pointer}
+.line.spoken{color:var(--arc-gray-900)}
+.line.now{color:var(--arc-black)}
+.line.now b,.line.now .v{color:var(--arc-red)}
+
+/* grid */
+.gridwrap{overflow-x:auto;background:var(--arc-white);border:1px solid var(--arc-gray-100)}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{text-align:left;padding:11px 14px;font-size:13.5px;border-bottom:1px solid var(--arc-gray-100)}
+thead th{border-top:2px solid var(--arc-black);border-bottom:2px solid var(--arc-black);font-family:var(--font-headline);font-size:14px}
+tbody th{font-family:var(--font-body);font-weight:600;color:var(--arc-gray-500);font-size:12px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+td{font-family:var(--font-data);color:var(--arc-gray-900)}
+td.up{color:var(--arc-success)}
+td.down{color:var(--arc-alert,#c41e3a)}
+td.dash{color:var(--arc-gray-300)}
+td.feat{font-family:var(--font-body);font-size:12.5px;line-height:1.4;color:var(--arc-gray-700);min-width:200px}
+.const-row th{color:var(--arc-black)}
+
+/* arc chart */
+.chartwrap{background:var(--arc-white);border:1px solid var(--arc-gray-100);padding:22px 24px}
+.chartwrap svg{width:100%;height:auto;display:block}
+.cnote{font-size:12.5px;color:var(--arc-gray-500);margin-top:10px}
+
+footer{border-top:3px solid var(--arc-black);padding:26px 0;background:var(--arc-white)}
+footer p{font-size:12.5px;color:var(--arc-gray-500)}
+footer b{color:var(--arc-gray-700)}
+
+@media(max-width:640px){
+  h1{font-size:26px}.ritual{font-size:15.5px;padding:20px}
+  .line{font-size:15px}.wk{flex:1 1 47%}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" width="26" height="26"><rect x="12" y="4" width="8" height="24" fill="#ED1B2E"/><rect x="4" y="12" width="24" height="8" fill="#ED1B2E"/></svg>
+      <span>WKHR 91.5 &middot; Bainbridge, Ohio &middot; The Sounds of Sinatra</span>
+    </div>
+    <h1>The Sunday Sunrise Liturgy</h1>
+    <div class="sub">David opens the show the same way every Sunday. Almost.</div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section>
+    <p class="lede">Five Sunday mornings, recorded off the air. David's opening is a small <b>liturgy</b> — the same words, the same cadence, week after week. But a handful of things change every time: the clock, the date, the sunrise and sunset, how much the day has grown or shrunk, and the musical he's featuring. This is that ritual, laid bare. <b>Pick a Sunday and press play</b> — the script fills in and follows along.</p>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="num">01</span><h2>The Ritual</h2><p>Everything in serif black is spoken almost word-for-word every week. The red slots are what change.</p></div>
+    <div class="ritual" id="ritual"></div>
+    <div class="legend"><span class="k a"></span>changes weekly<span class="k b"></span>spoken right now</div>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="num">02</span><h2>Play &amp; Compare</h2><p>Play one Sunday, or stack all five and hear the same liturgy drift out of sync.</p></div>
+    <div class="chips" id="chips"></div>
+    <div class="controls">
+      <button class="btn" id="playBtn">Play</button>
+      <button class="btn ghost" id="stackBtn">Stack all five</button>
+      <span class="thint" id="thint">Selected: <b id="thintwk"></b></span>
+      <span class="tt" id="tt">0:00 / 0:00</span>
+      <div class="bar" id="bar"><div class="fill" id="fill"></div></div>
+    </div>
+    <div class="aired" id="aired"></div>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="num">03</span><h2>What Changed, Week to Week</h2><p>The variable slots side by side. Rise and fall tracked against the previous Sunday.</p></div>
+    <div class="gridwrap"><table id="grid"></table></div>
+  </section>
+
+  <section>
+    <div class="sechead"><span class="num">04</span><h2>The Lengthening &amp; Shortening Day</h2><p>David's daily day-length figure, plotted across the five Sundays — the summer solstice sits right in the dip between June 7 and July 5, where "longer" quietly turns to "shorter."</p></div>
+    <div class="chartwrap" id="chartwrap"></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p><b>The Sunday Sunrise Liturgy</b> &middot; Built for Dragon from off-air recordings of WKHR 91.5, Bainbridge OH. Transcripts auto-generated (Whisper) and hand-corrected; audio trimmed to David's spoken opening only. Six files supplied — the June 14 clip held only music and isn't shown.</p>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+const WEEKS=window.WKHR.weeks, ORDER=window.WKHR.order;
+
+// ----- template (ritual) definition -----
+const TPL=[
+ {c:"Good morning, Northeast Ohio. This is WKHR Bainbridge, Cleveland, 91.5 FM — and good morning to the world, streaming live on WKHR.org. My name's David, and it's a pleasure to be with you during another Sunday sunrise. It is currently "},
+ {v:"time"},{c:" on Sunday, "},{v:"date"},{v:"temp",pre:", ",post:" outside the studio"},{c:". Today we'll have a sunrise at "},
+ {v:"sunrise"},{c:" here in Bainbridge, and a sunset this evening at "},{v:"sunset"},{c:" for a day length of "},{v:"length"},{c:". That is "},{v:"delta"},{c:" than "},{v:"ref"},
+ {c:". I started the show off this morning, as I usually do, with Irving Berlin's \u201cIt's a Lovely Day Today\u201d — so whatever you've got to do, you've got a lovely day to do it in. Please be sure to take WKHR along with you on your radio and online. "},
+ {v:"feature",block:true}
+];
+const DATEMAP={mar29:"March 29th, 2026",apr26:"April 26th, 2026",jun07:"June 7th, 2026",jul05:"July 5th, 2026",jul12:"July 12th, 2026"};
+
+let sel=ORDER[0];
+let stack=false;
+let playing=false;
+const audios={};
+ORDER.forEach(k=>{const a=new Audio();a.src=WEEKS[k].audio;a.preload="auto";audios[k]=a;});
+
+// ----- render ritual -----
+function renderRitual(){
+  const w=WEEKS[sel], s=w.slots; s.date=DATEMAP[sel];
+  const el=document.getElementById('ritual'); el.innerHTML='';
+  TPL.forEach(part=>{
+    if(part.c){el.appendChild(document.createTextNode(part.c));return;}
+    const key=part.v; const val=(key==='date')?DATEMAP[sel]:s[key];
+    if(val==null){
+      if(key==='temp')return; // temp optional: hide entirely when absent
+      const sp=document.createElement('span'); sp.className='chip empty'; sp.dataset.k=key; sp.textContent='—'; el.appendChild(sp); return;
+    }
+    if(part.pre)el.appendChild(document.createTextNode(part.pre));
+    const sp=document.createElement('span'); sp.className='chip'; sp.dataset.k=key; sp.textContent=val;
+    el.appendChild(sp);
+    if(part.post)el.appendChild(document.createTextNode(part.post));
+  });
+}
+function pulseChips(keys){
+  document.querySelectorAll('#ritual .chip').forEach(c=>{
+    c.classList.toggle('pulse', keys.includes(c.dataset.k));
+  });
+}
+
+// ----- render week chips -----
+function renderChips(){
+  const el=document.getElementById('chips'); el.innerHTML='';
+  ORDER.forEach(k=>{
+    const w=WEEKS[k];
+    const d=document.createElement('div'); d.className='wk'+(k===sel?' active':''); d.dataset.k=k;
+    d.innerHTML=`<div class="d">${w.label}</div><div class="s">${w.sub}</div><div class="len">day &middot; ${w.slots.length}</div><span class="playing"></span><span class="mute">mute</span>`;
+    d.addEventListener('click',e=>{
+      if(stack){
+        if(e.target.classList.contains('mute')||true){toggleMute(k);} return;
+      }
+      selectWeek(k,true);
+    });
+    el.appendChild(d);
+  });
+}
+function toggleMute(k){
+  const d=document.querySelector(`.wk[data-k="${k}"]`);
+  d.classList.toggle('muted');
+  audios[k].muted=d.classList.contains('muted');
+}
+
+// ----- select a week (single mode) -----
+function selectWeek(k,autoplay){
+  sel=k;
+  document.querySelectorAll('.wk').forEach(w=>w.classList.toggle('active',w.dataset.k===k));
+  document.getElementById('thintwk').textContent=WEEKS[k].label;
+  renderRitual(); renderAired();
+  if(!stack){
+    ORDER.forEach(o=>{if(o!==k){audios[o].pause();}});
+    if(autoplay){ playSingle(); } else { updateBar(); }
+  }
+}
+
+// ----- aired transcript -----
+function renderAired(){
+  const w=WEEKS[sel];
+  const cap = w.captured==='partial' ? '<span class="tag">partial capture — recording started mid-intro</span>'
+            : w.captured==='nogreet' ? '<span class="tag">recording started at David\u2019s greeting</span>' : '';
+  let html=`<div class="cap"><span>As aired &middot; ${w.label}, 2026</span>${cap}</div>`;
+  w.lines.forEach((ln,i)=>{
+    html+=`<div class="line" data-i="${i}" data-t="${ln[0]}">${markVars(ln[1])}</div>`;
+  });
+  const el=document.getElementById('aired'); el.innerHTML=html; el.dataset.k=sel;
+  el.querySelectorAll('.line').forEach(l=>{
+    l.addEventListener('click',()=>{ const t=parseFloat(l.dataset.t); audios[sel].currentTime=t+0.02; if(!playing)playSingle(); });
+  });
+}
+// bold the numeric/variable bits inside a spoken line for the "now" red treatment
+function markVars(txt){
+  return txt
+   .replace(/(\d{1,2}:\d{2}(?:\s?and a half|\u00bd)?)/g,'<b>$1</b>')
+   .replace(/(\d{1,2}\u00b0|\d{1,2} degrees)/g,'<b>$1</b>')
+   .replace(/(\d{1,2} hours and \d{1,2} minutes)/g,'<b>$1</b>')
+   .replace(/(\d{1,2} minutes (?:longer|shorter))/g,'<b>$1</b>');
+}
+
+// ----- playback -----
+let raf=null;
+function playSingle(){
+  stack=false; document.body.classList.remove('stack');
+  document.getElementById('stackBtn').classList.remove('on');
+  ORDER.forEach(o=>{if(o!==sel)audios[o].pause();});
+  const a=audios[sel];
+  if(a.ended||(a.duration&&a.currentTime>=a.duration-0.05))a.currentTime=0;
+  a.play(); playing=true; document.getElementById('playBtn').textContent='Pause';
+  markSounding(); loop();
+}
+function pauseAll(){
+  ORDER.forEach(o=>audios[o].pause()); playing=false;
+  document.getElementById('playBtn').textContent='Play';
+  cancelAnimationFrame(raf);
+  document.querySelectorAll('.wk').forEach(w=>w.classList.remove('sounding'));
+}
+function markSounding(){
+  document.querySelectorAll('.wk').forEach(w=>{
+    const on = stack ? !audios[w.dataset.k].muted : (w.dataset.k===sel);
+    w.classList.toggle('sounding', on);
+  });
+}
+function loop(){
+  const lead = stack ? firstUnmuted() : sel;
+  if(lead){ syncKaraoke(lead); updateBar(lead); }
+  // stop when everything ended
+  const anyPlaying = ORDER.some(o=>!audios[o].paused && !audios[o].ended);
+  if(!anyPlaying){ pauseAll(); return; }
+  raf=requestAnimationFrame(loop);
+}
+function firstUnmuted(){ return ORDER.find(o=>!audios[o].muted && !audios[o].paused) || sel; }
+
+function syncKaraoke(k){
+  if(k!==sel){ // in stack, follow the lead track's transcript
+    if(document.getElementById('aired').dataset.k!==k){ sel=k; renderAired(); renderRitual();
+      document.querySelectorAll('.wk').forEach(w=>w.classList.toggle('active',w.dataset.k===k)); }
+  }
+  const t=audios[k].currentTime, lines=WEEKS[k].lines;
+  let idx=-1;
+  for(let i=0;i<lines.length;i++){ if(t>=lines[i][0]-0.15) idx=i; else break; }
+  const els=document.querySelectorAll('#aired .line');
+  els.forEach((el,i)=>{
+    el.classList.toggle('now',i===idx);
+    el.classList.toggle('spoken',i<idx);
+  });
+  pulseChips(idx>=0?lines[idx][2]:[]);
+}
+
+function updateBar(k){
+  k=k||sel; const a=audios[k];
+  const d=a.duration||0,c=a.currentTime||0;
+  document.getElementById('fill').style.width=(d?100*c/d:0)+'%';
+  document.getElementById('tt').textContent=fmt(c)+' / '+fmt(d);
+}
+function fmt(s){s=Math.max(0,s|0);return (s/60|0)+':'+String(s%60).padStart(2,'0');}
+
+// ----- controls -----
+document.getElementById('playBtn').addEventListener('click',()=>{
+  if(playing){pauseAll();}
+  else if(stack){playStack();}
+  else{playSingle();}
+});
+document.getElementById('stackBtn').addEventListener('click',()=>{
+  stack=!stack; document.body.classList.toggle('stack',stack);
+  document.getElementById('stackBtn').classList.toggle('on',stack);
+  pauseAll();
+  document.querySelectorAll('.wk').forEach(w=>w.classList.remove('muted'));
+  ORDER.forEach(o=>audios[o].muted=false);
+  document.getElementById('thint').innerHTML = stack
+    ? 'Stack mode — <b>Play</b> starts all five. Tap a card to mute it.'
+    : 'Selected: <b id="thintwk">'+WEEKS[sel].label+'</b>';
+});
+function playStack(){
+  ORDER.forEach(o=>{audios[o].currentTime=0;audios[o].play();});
+  playing=true; document.getElementById('playBtn').textContent='Pause';
+  markSounding(); loop();
+}
+document.getElementById('bar').addEventListener('click',e=>{
+  const k = stack?firstUnmuted():sel; const a=audios[k];
+  const r=e.currentTarget.getBoundingClientRect();
+  const p=(e.clientX-r.left)/r.width;
+  if(stack){ ORDER.forEach(o=>{ if(a.duration) audios[o].currentTime=p*audios[o].duration; }); }
+  else if(a.duration){ a.currentTime=p*a.duration; }
+  updateBar(k);
+});
+
+// ----- comparison grid -----
+function renderGrid(){
+  const rows=[
+    ["Clock","time","plain"],
+    ["Temp","temp","plain"],
+    ["Sunrise","sunrise","plain"],
+    ["Sunset","sunset","plain"],
+    ["Day length","length","plain"],
+    ["vs. prior","delta","delta"],
+    ["Featured","feature","feat"],
+  ];
+  let h='<thead><tr><th>Slot</th>'+ORDER.map(k=>`<th>${WEEKS[k].label}</th>`).join('')+'</tr></thead><tbody>';
+  rows.forEach(([lbl,key,kind])=>{
+    h+=`<tr><th>${lbl}</th>`;
+    ORDER.forEach(k=>{
+      const s=WEEKS[k].slots; let v=s[key];
+      if(v==null){h+='<td class="dash">—</td>';return;}
+      if(kind==='delta'){const cls=s.deltaDir==='up'?'up':'down';const arr=s.deltaDir==='up'?'\u25B2':'\u25BC';h+=`<td class="${cls}">${arr} ${v}</td>`;}
+      else if(kind==='feat'){h+=`<td class="feat">${v}</td>`;}
+      else{h+=`<td>${v}</td>`;}
+    });
+    h+='</tr>';
+  });
+  h+='</tbody>';
+  document.getElementById('grid').innerHTML=h;
+}
+
+// ----- day-length arc chart -----
+function renderChart(){
+  const W=920,H=300,padL=64,padR=28,padT=28,padB=54;
+  const vals=ORDER.map(k=>WEEKS[k].lengthMin);
+  const min=740,max=920;
+  const x=i=>padL+(i/(ORDER.length-1))*(W-padL-padR);
+  const y=v=>padT+(1-(v-min)/(max-min))*(H-padT-padB);
+  let grid='';
+  for(let m=760;m<=920;m+=40){const yy=y(m);grid+=`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="#e5e5e5"/><text x="${padL-10}" y="${yy+4}" text-anchor="end" font-family="IBM Plex Mono" font-size="11" fill="#a3a3a3">${(m/60|0)}h${String(m%60).padStart(2,'0')}</text>`;}
+  const pts=ORDER.map((k,i)=>[x(i),y(WEEKS[k].lengthMin)]);
+  const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  let dots='';
+  pts.forEach((p,i)=>{const k=ORDER[i];const w=WEEKS[k];
+    dots+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="#ED1B2E"/>`+
+          `<text x="${p[0]}" y="${p[1]-14}" text-anchor="middle" font-family="IBM Plex Mono" font-size="11.5" font-weight="600" fill="#1a1a1a">${w.slots.length}</text>`+
+          `<text x="${p[0]}" y="${H-padB+20}" text-anchor="middle" font-family="Source Sans Pro" font-size="12" fill="#4a4a4a">${w.label}</text>`+
+          `<text x="${p[0]}" y="${H-padB+36}" text-anchor="middle" font-family="IBM Plex Mono" font-size="10.5" fill="${w.slots.deltaDir==='up'?'#2d5a27':'#c41e3a'}">${w.slots.deltaDir==='up'?'\u25B2':'\u25BC'} ${w.slots.delta.replace(' longer','').replace(' shorter','')}</text>`;
+  });
+  const svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Day length across five Sundays">
+    ${grid}
+    <path d="${path}" fill="none" stroke="#ED1B2E" stroke-width="2"/>
+    ${dots}
+  </svg><div class="cnote">Peak daylight lands between June 7 (15h 07m, still lengthening) and July 5 (15h 06m, now shortening) — the solstice caught in the turn.</div>`;
+  document.getElementById('chartwrap').innerHTML=svg;
+}
+
+// ----- init -----
+document.getElementById('thintwk').textContent=WEEKS[sel].label;
+renderChips(); selectWeek(sel,false); renderGrid(); renderChart();
+audios[sel].addEventListener('loadedmetadata',()=>updateBar());
+</script>
+</body>
+</html>
