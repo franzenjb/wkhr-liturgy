@@ -144,7 +144,7 @@ footer b{color:var(--arc-gray-700)}
   </section>
 
   <section>
-    <div class="sechead"><span class="num">02</span><h2>Play &amp; Compare</h2><p>Play one Sunday, or stack all five and hear the same liturgy drift out of sync.</p></div>
+    <div class="sechead"><span class="num">02</span><h2>Play &amp; Compare</h2><p>Play one Sunday, or stack all five aligned on the same liturgy line, so the clips that miss the open fall silent and join in when they reach it.</p></div>
     <div class="chips" id="chips"></div>
     <div class="controls">
       <button class="btn" id="playBtn">Play</button>
@@ -193,6 +193,24 @@ let stack=false;
 let playing=false;
 const audios={};
 ORDER.forEach(k=>{const a=new Audio();a.src=WEEKS[k].audio;a.preload="auto";audios[k]=a;});
+
+// ----- synced-stack alignment -----
+// Align every clip on a shared liturgy beat — the "…minutes longer/shorter than last week"
+// line (the `delta` slot, present in all five). A clip that misses the open stays silent
+// until the master clock reaches its entry (OFFSET), then joins in.
+function anchorTime(k){
+  const L=WEEKS[k].lines;
+  let ln=L.find(x=>x[2]&&x[2].includes('delta')) || L.find(x=>/take WKHR along with you/.test(x[1]));
+  return ln?ln[0]:0;
+}
+const SYNC_ANCHOR=Math.max(...ORDER.map(anchorTime));
+const OFFSET={}; ORDER.forEach(k=>OFFSET[k]=+(SYNC_ANCHOR-anchorTime(k)).toFixed(2));
+let stackStart=0;   // performance.now()/1000 mapped to masterT=0
+let stackClock=0;   // masterT held while paused
+const nowSec=()=>performance.now()/1000;
+const masterT=()=>(playing&&stack)?nowSec()-stackStart:stackClock;
+function stackDuration(){return Math.max(...ORDER.map(k=>OFFSET[k]+(audios[k].duration||0)));}
+const allLoaded=()=>ORDER.every(k=>audios[k].duration);
 
 // ----- render ritual -----
 function renderRitual(){
@@ -286,6 +304,7 @@ function playSingle(){
   markSounding(); loop();
 }
 function pauseAll(){
+  if(stack&&playing) stackClock=masterT();   // freeze master clock so resume continues in place
   ORDER.forEach(o=>audios[o].pause()); playing=false;
   document.getElementById('playBtn').textContent='Play';
   cancelAnimationFrame(raf);
@@ -293,19 +312,36 @@ function pauseAll(){
 }
 function markSounding(){
   document.querySelectorAll('.wk').forEach(w=>{
-    const on = stack ? !audios[w.dataset.k].muted : (w.dataset.k===sel);
+    const k=w.dataset.k, a=audios[k];
+    const on = stack ? (masterT()>=OFFSET[k] && !a.muted && !a.paused) : (k===sel);
     w.classList.toggle('sounding', on);
   });
 }
 function loop(){
-  const lead = stack ? firstUnmuted() : sel;
-  if(lead){ syncKaraoke(lead); updateBar(lead); }
-  // stop when everything ended
-  const anyPlaying = ORDER.some(o=>!audios[o].paused && !audios[o].ended);
-  if(!anyPlaying){ pauseAll(); return; }
+  if(stack){ syncStack(); }
+  else{
+    if(sel){ syncKaraoke(sel); updateBar(sel); }
+    const anyPlaying = ORDER.some(o=>!audios[o].paused && !audios[o].ended);
+    if(!anyPlaying){ pauseAll(); return; }
+  }
   raf=requestAnimationFrame(loop);
 }
-function firstUnmuted(){ return ORDER.find(o=>!audios[o].muted && !audios[o].paused) || sel; }
+// drive all five off one master clock; each clip lags by OFFSET and is silent before its entry
+function syncStack(){
+  const T=masterT(), dur=stackDuration();
+  ORDER.forEach(k=>{
+    const a=audios[k], want=T-OFFSET[k], d=a.duration||1e9;
+    if(want<0 || want>=d){ if(!a.paused) a.pause(); return; }
+    if(a.paused){ a.currentTime=Math.max(0,want); a.play().catch(()=>{}); }
+    else if(Math.abs(a.currentTime-want)>0.25){ a.currentTime=want; }
+  });
+  markSounding();
+  const lead=ORDER.find(k=>{const a=audios[k];return T>=OFFSET[k] && !a.muted && (a.duration?a.currentTime<a.duration-0.1:true);})||sel;
+  syncKaraoke(lead);
+  document.getElementById('fill').style.width=(dur?100*Math.min(T,dur)/dur:0)+'%';
+  document.getElementById('tt').textContent=fmt(Math.min(T,dur))+' / '+fmt(dur);
+  if(T>=dur && allLoaded()){ pauseAll(); }
+}
 
 function syncKaraoke(k){
   if(k!==sel){ // in stack, follow the lead track's transcript
@@ -341,24 +377,28 @@ document.getElementById('stackBtn').addEventListener('click',()=>{
   stack=!stack; document.body.classList.toggle('stack',stack);
   document.getElementById('stackBtn').classList.toggle('on',stack);
   pauseAll();
+  stackClock=0;
   document.querySelectorAll('.wk').forEach(w=>w.classList.remove('muted'));
   ORDER.forEach(o=>audios[o].muted=false);
   document.getElementById('thint').innerHTML = stack
-    ? 'Stack mode — <b>Play</b> starts all five. Tap a card to mute it.'
+    ? 'Synced stack &middot; <b>Play</b> aligns all five on the same liturgy. Clips that miss the open join in when they reach it. Tap a card to mute one.'
     : 'Selected: <b id="thintwk">'+WEEKS[sel].label+'</b>';
 });
 function playStack(){
-  ORDER.forEach(o=>{audios[o].currentTime=0;audios[o].play();});
+  stack=true; document.body.classList.add('stack');
+  if(stackClock>=stackDuration()-0.1) stackClock=0;   // restart if parked at the end
+  stackStart=nowSec()-stackClock;
   playing=true; document.getElementById('playBtn').textContent='Pause';
-  markSounding(); loop();
+  loop();
 }
 document.getElementById('bar').addEventListener('click',e=>{
-  const k = stack?firstUnmuted():sel; const a=audios[k];
   const r=e.currentTarget.getBoundingClientRect();
-  const p=(e.clientX-r.left)/r.width;
-  if(stack){ ORDER.forEach(o=>{ if(a.duration) audios[o].currentTime=p*audios[o].duration; }); }
-  else if(a.duration){ a.currentTime=p*a.duration; }
-  updateBar(k);
+  const p=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width));
+  if(stack){
+    stackClock=p*stackDuration(); stackStart=nowSec()-stackClock;
+    if(!playing){ document.getElementById('fill').style.width=(100*p)+'%';
+      document.getElementById('tt').textContent=fmt(stackClock)+' / '+fmt(stackDuration()); }
+  } else { const a=audios[sel]; if(a.duration){ a.currentTime=p*a.duration; updateBar(sel);} }
 });
 
 // ----- comparison grid -----
