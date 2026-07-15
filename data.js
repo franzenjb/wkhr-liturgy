@@ -2,6 +2,7 @@ window.WKHR = {
  "order": [
   "mar29",
   "apr26",
+  "may31",
   "jun07",
   "jun14",
   "jun21",
@@ -161,6 +162,93 @@ window.WKHR = {
     ]
    ],
    "audio": "./audio/apr26.mp3"
+  },
+  "may31": {
+   "label": "May 31",
+   "sub": "Last Sunday of May",
+   "captured": "full",
+   "slots": {
+    "time": "7:03",
+    "temp": null,
+    "sunrise": "5:53",
+    "sunset": "8:53",
+    "length": "15h 00m",
+    "delta": "10 min longer",
+    "deltaDir": "up",
+    "ref": "last week",
+    "feature": "Finale Sunday — Ain't Misbehavin' (1978); Terry Blaine, “The Joint Is Jumpin'”"
+   },
+   "lengthMin": 900,
+   "lines": [
+    [
+     0.0,
+     "Good morning, Northeast Ohio. This is WKHR Bainbridge, Cleveland, 91.5 on your FM radio dial — and good morning to the world, streaming live on WKHR.org.",
+     []
+    ],
+    [
+     31.32,
+     "My name's David, and it's a pleasure to be with you during another Sunday sunrise.",
+     []
+    ],
+    [
+     36.8,
+     "Thank you so much for starting your day with WKHR.",
+     []
+    ],
+    [
+     40.92,
+     "It is currently just turned over 7:03 on Sunday, May 31st, 2026.",
+     [
+      "time",
+      "date"
+     ]
+    ],
+    [
+     48.96,
+     "Today we had a sunrise at 5:53,",
+     [
+      "sunrise"
+     ]
+    ],
+    [
+     52.84,
+     "and we'll have a sunset this evening here in Bainbridge at 8:53 for a day length of 15 hours.",
+     [
+      "sunset",
+      "length"
+     ]
+    ],
+    [
+     61.08,
+     "That is 10 minutes longer than we had last week.",
+     [
+      "delta"
+     ]
+    ],
+    [
+     64.68,
+     "I started the show off this morning, as I usually do, with Irving Berlin's “It's a Lovely Day Today” — so whatever you've got to do, you've got an absolutely lovely day to do it in.",
+     []
+    ],
+    [
+     75.76,
+     "Please be sure to take WKHR along with you on your radio and online.",
+     []
+    ],
+    [
+     82.36,
+     "As this is the last Sunday of May, this is my finale Sunday for the Broadway musical I've featured all month — the 1978 production of Ain't Misbehavin'.",
+     [
+      "feature"
+     ]
+    ],
+    [
+     98.76,
+     "So let's get this finale Sunday started with Terry Blaine and the tune “The Joint Is Jumpin'.”",
+     []
+    ]
+   ],
+   "audio": "./audio/may31.mp3"
   },
   "jun07": {
    "label": "June 7",
