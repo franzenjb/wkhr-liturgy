@@ -9,10 +9,11 @@
 <style>
 :root{
   color-scheme:light;
-  --arc-red:#ED1B2E;--arc-black:#1a1a1a;--arc-cream:#f7f5f2;
-  --arc-gray-900:#2d2d2d;--arc-gray-700:#4a4a4a;--arc-gray-500:#737373;
-  --arc-gray-300:#a3a3a3;--arc-gray-100:#e5e5e5;--arc-white:#fff;
-  --arc-info:#1e4a6d;--arc-success:#2d5a27;--arc-caution:#b8860b;
+  /* On-Air palette — burnt amber (dawn / on-air glow), not Red Cross red */
+  --arc-red:#b4530a;--arc-red-strong:#8f4008;--arc-black:#1c1a16;--arc-cream:#f3f1ea;
+  --arc-gray-900:#2a2824;--arc-gray-700:#4c4842;--arc-gray-500:#6f6b62;
+  --arc-gray-300:#a09b90;--arc-gray-100:#e6e2d8;--arc-white:#fffdfa;
+  --arc-info:#1e4a6d;--arc-success:#3a6b2e;--arc-caution:#8a6d1f;--arc-alert:#a3441a;
   --font-headline:'Libre Baskerville',Georgia,serif;
   --font-body:'Source Sans Pro','Helvetica Neue',sans-serif;
   --font-data:'IBM Plex Mono',Consolas,monospace;
@@ -26,18 +27,19 @@ body{font-family:var(--font-body);background:var(--arc-cream)!important;color:va
 ::-webkit-scrollbar-thumb{background:var(--arc-gray-300);border-radius:3px}
 
 /* header */
-header{background:var(--arc-white);border-bottom:3px solid var(--arc-black);padding:30px 0 26px}
-.brand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+header{background:var(--arc-white);border-top:3px solid var(--arc-red);border-bottom:1px solid var(--arc-gray-100);padding:30px 0 26px}
+.brand{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.brand .mark{color:var(--arc-red);flex:none}
 .brand span{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--arc-gray-500)}
-h1{font-family:var(--font-headline);font-size:34px;font-weight:700;color:var(--arc-black);line-height:1.15}
-.sub{font-size:17px;color:var(--arc-gray-500);font-weight:300;margin-top:6px}
+h1{font-family:var(--font-headline);font-size:clamp(30px,4.4vw,44px);font-weight:700;color:var(--arc-black);line-height:1.12;letter-spacing:-.01em;text-wrap:balance}
+.sub{font-size:17px;color:var(--arc-gray-700);font-weight:400;margin-top:8px;max-width:60ch}
 .redrule{width:40px;height:3px;background:var(--arc-red)}
 
 main{padding-top:34px;padding-bottom:60px;background:var(--arc-cream);min-height:60vh}
 section{margin-bottom:46px}
 .sechead{margin-bottom:18px}
 .sechead .num{font-family:var(--font-data);font-size:13px;color:var(--arc-red);font-weight:600}
-.sechead h2{font-family:var(--font-headline);font-size:23px;font-weight:700;color:var(--arc-black);margin:6px 0 6px}
+.sechead h2{font-family:var(--font-headline);font-size:23px;font-weight:700;color:var(--arc-black);margin:0 0 6px;text-wrap:balance}
 .sechead p{font-size:14px;color:var(--arc-gray-500);max-width:680px}
 
 /* intro copy */
@@ -45,20 +47,20 @@ section{margin-bottom:46px}
 .lede b{color:var(--arc-black);font-weight:600}
 
 /* the ritual / template panel */
-.ritual{background:var(--arc-white);border:1px solid var(--arc-gray-100);border-left:3px solid var(--arc-red);padding:26px 28px;font-family:var(--font-headline);font-size:17px;line-height:1.95;color:var(--arc-black)}
-.chip{display:inline-block;font-family:var(--font-data);font-size:13.5px;font-weight:500;line-height:1.3;padding:1px 8px;border-radius:3px;background:#fbecef;color:var(--arc-red);border:1px solid #f5c6cd;white-space:nowrap;transition:background .15s,box-shadow .15s}
+.ritual{background:var(--arc-white);border:1px solid var(--arc-gray-100);border-top:2px solid var(--arc-red);padding:28px 30px;font-family:var(--font-headline);font-size:17px;line-height:1.95;color:var(--arc-black);box-shadow:0 1px 2px rgba(28,26,22,.04)}
+.chip{display:inline-block;font-family:var(--font-data);font-size:13.5px;font-weight:500;line-height:1.3;padding:1px 8px;border-radius:3px;background:#f9ecda;color:var(--arc-red-strong);border:1px solid #eed7b4;white-space:nowrap;transition:background .15s,box-shadow .15s}
 .chip.empty{background:var(--arc-gray-100);color:var(--arc-gray-500);border-color:var(--arc-gray-100);font-style:normal}
-.chip.pulse{background:var(--arc-red);color:#fff;border-color:var(--arc-red);box-shadow:0 0 0 3px rgba(237,27,46,.15)}
+.chip.pulse{background:var(--arc-red);color:#fff;border-color:var(--arc-red);box-shadow:0 0 0 3px rgba(180,83,10,.18)}
 .legend{font-family:var(--font-body);font-size:12.5px;color:var(--arc-gray-500);margin-top:14px}
 .legend .k{display:inline-block;width:11px;height:11px;border-radius:2px;vertical-align:-1px;margin:0 5px 0 14px}
-.legend .k.a{background:#fbecef;border:1px solid #f5c6cd}
+.legend .k.a{background:#f9ecda;border:1px solid #eed7b4}
 .legend .k.b{background:var(--arc-black)}
 
 /* player */
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
 .wk{flex:1 1 165px;min-width:150px;background:var(--arc-white);border:1px solid var(--arc-gray-100);padding:12px 14px;cursor:pointer;transition:border-color .15s,box-shadow .15s;position:relative}
 .wk:hover{box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.wk.active{border-color:var(--arc-black);box-shadow:inset 3px 0 0 var(--arc-red)}
+.wk.active{border-color:var(--arc-black);box-shadow:inset 0 2px 0 var(--arc-red)}
 .wk .d{font-family:var(--font-headline);font-size:16px;font-weight:700;color:var(--arc-black)}
 .wk .s{font-size:11.5px;color:var(--arc-gray-500);margin-top:1px}
 .wk .len{font-family:var(--font-data);font-size:12px;color:var(--arc-gray-700);margin-top:8px}
@@ -73,7 +75,7 @@ body.stack .wk .playing{display:none}
 
 .controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--arc-white);border:1px solid var(--arc-gray-100);padding:14px 18px}
 .btn{font-family:var(--font-body);font-size:14px;font-weight:600;padding:9px 18px;border:none;cursor:pointer;background:var(--arc-red);color:#fff;letter-spacing:.3px}
-.btn:hover{background:#c41628}
+.btn:hover{background:var(--arc-red-strong)}
 .btn.ghost{background:transparent;color:var(--arc-black);border:1px solid var(--arc-gray-300)}
 .btn.ghost:hover{background:var(--arc-cream);border-color:var(--arc-black)}
 .btn.on{background:var(--arc-black);color:#fff;border-color:var(--arc-black)}
@@ -114,8 +116,12 @@ footer p{font-size:12.5px;color:var(--arc-gray-500)}
 footer b{color:var(--arc-gray-700)}
 
 @media(max-width:640px){
-  h1{font-size:26px}.ritual{font-size:15.5px;padding:20px}
+  .ritual{font-size:15.5px;padding:20px 18px}
   .line{font-size:15px}.wk{flex:1 1 47%}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
 </style>
 </head>
@@ -123,7 +129,7 @@ footer b{color:var(--arc-gray-700)}
 <header>
   <div class="container">
     <div class="brand">
-      <svg viewBox="0 0 32 32" width="26" height="26"><rect x="12" y="4" width="8" height="24" fill="#ED1B2E"/><rect x="4" y="12" width="24" height="8" fill="#ED1B2E"/></svg>
+      <svg class="mark" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="5.5" cy="18.5" r="2.5" fill="currentColor"/><path d="M5.5 12.5 A6 6 0 0 1 11.5 18.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M5.5 7 A11.5 11.5 0 0 1 17 18.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
       <span>WKHR 91.5 &middot; Bainbridge, Ohio &middot; The Sounds of Sinatra</span>
     </div>
     <h1>The Sunday Sunrise Liturgy</h1>
@@ -138,13 +144,13 @@ footer b{color:var(--arc-gray-700)}
   </section>
 
   <section>
-    <div class="sechead"><span class="num">01</span><h2>The Ritual</h2><p>Everything in serif black is spoken almost word-for-word every week. The red slots are what change.</p></div>
+    <div class="sechead"><h2>The Ritual</h2><p>Everything in serif black is spoken almost word-for-word every week. The amber slots are what change.</p></div>
     <div class="ritual" id="ritual"></div>
     <div class="legend"><span class="k a"></span>changes weekly<span class="k b"></span>spoken right now</div>
   </section>
 
   <section>
-    <div class="sechead"><span class="num">02</span><h2>Play &amp; Compare</h2><p>Play one Sunday, or stack all five aligned on the same liturgy line, so the clips that miss the open fall silent and join in when they reach it.</p></div>
+    <div class="sechead"><h2>Play &amp; Compare</h2><p>Play one Sunday, or stack all five aligned on the same liturgy line, so the clips that miss the open fall silent and join in when they reach it.</p></div>
     <div class="chips" id="chips"></div>
     <div class="controls">
       <button class="btn" id="playBtn">Play</button>
@@ -157,12 +163,12 @@ footer b{color:var(--arc-gray-700)}
   </section>
 
   <section>
-    <div class="sechead"><span class="num">03</span><h2>What Changed, Week to Week</h2><p>The variable slots side by side. Rise and fall tracked against the previous Sunday.</p></div>
+    <div class="sechead"><h2>What Changed, Week to Week</h2><p>The variable slots side by side. Rise and fall tracked against the previous Sunday.</p></div>
     <div class="gridwrap"><table id="grid"></table></div>
   </section>
 
   <section>
-    <div class="sechead"><span class="num">04</span><h2>The Lengthening &amp; Shortening Day</h2><p>David's daily day-length figure, plotted across the five Sundays — the summer solstice sits right in the dip between June 7 and July 5, where "longer" quietly turns to "shorter."</p></div>
+    <div class="sechead"><h2>The Lengthening &amp; Shortening Day</h2><p>David's daily day-length figure, plotted across the five Sundays — the summer solstice sits right in the dip between June 7 and July 5, where "longer" quietly turns to "shorter."</p></div>
     <div class="chartwrap" id="chartwrap"></div>
   </section>
 
@@ -436,19 +442,19 @@ function renderChart(){
   const x=i=>padL+(i/(ORDER.length-1))*(W-padL-padR);
   const y=v=>padT+(1-(v-min)/(max-min))*(H-padT-padB);
   let grid='';
-  for(let m=760;m<=920;m+=40){const yy=y(m);grid+=`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="#e5e5e5"/><text x="${padL-10}" y="${yy+4}" text-anchor="end" font-family="IBM Plex Mono" font-size="11" fill="#a3a3a3">${(m/60|0)}h${String(m%60).padStart(2,'0')}</text>`;}
+  for(let m=760;m<=920;m+=40){const yy=y(m);grid+=`<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="#e6e2d8"/><text x="${padL-10}" y="${yy+4}" text-anchor="end" font-family="IBM Plex Mono" font-size="11" fill="#a09b90">${(m/60|0)}h${String(m%60).padStart(2,'0')}</text>`;}
   const pts=ORDER.map((k,i)=>[x(i),y(WEEKS[k].lengthMin)]);
   const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
   let dots='';
   pts.forEach((p,i)=>{const k=ORDER[i];const w=WEEKS[k];
-    dots+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="#ED1B2E"/>`+
+    dots+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="#b4530a"/>`+
           `<text x="${p[0]}" y="${p[1]-14}" text-anchor="middle" font-family="IBM Plex Mono" font-size="11.5" font-weight="600" fill="#1a1a1a">${w.slots.length}</text>`+
           `<text x="${p[0]}" y="${H-padB+20}" text-anchor="middle" font-family="Source Sans Pro" font-size="12" fill="#4a4a4a">${w.label}</text>`+
-          `<text x="${p[0]}" y="${H-padB+36}" text-anchor="middle" font-family="IBM Plex Mono" font-size="10.5" fill="${w.slots.deltaDir==='up'?'#2d5a27':'#c41e3a'}">${w.slots.deltaDir==='up'?'\u25B2':'\u25BC'} ${w.slots.delta.replace(' longer','').replace(' shorter','')}</text>`;
+          `<text x="${p[0]}" y="${H-padB+36}" text-anchor="middle" font-family="IBM Plex Mono" font-size="10.5" fill="${w.slots.deltaDir==='up'?'#3a6b2e':'#a3441a'}">${w.slots.deltaDir==='up'?'\u25B2':'\u25BC'} ${w.slots.delta.replace(' longer','').replace(' shorter','')}</text>`;
   });
   const svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Day length across five Sundays">
     ${grid}
-    <path d="${path}" fill="none" stroke="#ED1B2E" stroke-width="2"/>
+    <path d="${path}" fill="none" stroke="#b4530a" stroke-width="2"/>
     ${dots}
   </svg><div class="cnote">Peak daylight lands between June 7 (15h 07m, still lengthening) and July 5 (15h 06m, now shortening) — the solstice caught in the turn.</div>`;
   document.getElementById('chartwrap').innerHTML=svg;
