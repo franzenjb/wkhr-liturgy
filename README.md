@@ -1,6 +1,6 @@
 # The Sunday Sunrise Liturgy — WKHR 91.5
 
-A static web app that plays and compares David's weekly opening on WKHR 91.5 (Bainbridge, OH).
+A static web app that plays and compares David Noeth's weekly opening on WKHR 91.5 (Bainbridge, OH).
 No build step, no framework. Three moving parts:
 
 ```
